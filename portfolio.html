@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uzair — Data Analyst & Statistician</title>
+<meta name="description" content="Portfolio of Uzair, a Data Analyst and Statistician specialising in reproducible analytics pipelines, Power BI and Python.">
+
+<!-- Tailwind (CDN, JIT) -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          base: '#0B0F19',
+          panel: '#10141F',
+          panel2: '#141926',
+          line: '#1E2436',
+          indigo: { DEFAULT: '#6366F1', dim: '#4B4FD1' },
+          cyan: '#22D3EE',
+          violet: '#A855F7',
+          ink: '#E7E9F0',
+          mute: '#8A93A8',
+        },
+        fontFamily: {
+          sans: ['Inter', 'sans-serif'],
+          mono: ['JetBrains Mono', 'monospace'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { background-color: #0B0F19; }
+
+  ::selection { background: #6366F1; color: #fff; }
+
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #0B0F19; }
+  ::-webkit-scrollbar-thumb { background: #232a3d; border-radius: 6px; }
+  ::-webkit-scrollbar-thumb:hover { background: #2f3752; }
+
+  /* Scroll progress bar */
+  #scroll-progress {
+    position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+    background: linear-gradient(90deg, #6366F1, #22D3EE);
+    z-index: 100; transition: width 0.1s ease-out;
+  }
+
+  /* Reveal-on-scroll */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+  /* Faint data-grid backdrop */
+  .grid-backdrop {
+    background-image:
+      linear-gradient(rgba(148,163,184,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148,163,184,0.06) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  }
+
+  /* Ambient glows */
+  .glow-indigo { background: radial-gradient(closest-side, rgba(99,102,241,0.35), transparent); }
+  .glow-cyan { background: radial-gradient(closest-side, rgba(34,211,238,0.25), transparent); }
+  .glow-violet { background: radial-gradient(closest-side, rgba(168,85,247,0.25), transparent); }
+
+  .glass {
+    background: rgba(20, 25, 38, 0.55);
+    border: 1px solid rgba(148,163,184,0.10);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .type-caret::after {
+    content: '';
+    display: inline-block;
+    width: 3px; height: 1em;
+    background: #22D3EE;
+    margin-left: 4px;
+    vertical-align: -0.15em;
+    animation: blink 0.9s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* animated live-chart bars (hero motif) */
+  @keyframes pulseBar {
+    0%, 100% { transform: scaleY(0.4); }
+    50% { transform: scaleY(1); }
+  }
+  .bar { transform-origin: bottom; animation: pulseBar 2.4s ease-in-out infinite; }
+
+  /* skill meter fill */
+  .meter-fill { width: 0%; transition: width 1.2s cubic-bezier(.22,1,.36,1); }
+
+  /* nav underline */
+  .nav-link { position: relative; }
+  .nav-link::after {
+    content: ''; position: absolute; left: 0; bottom: -4px; width: 0%; height: 1px;
+    background: #22D3EE; transition: width 0.25s ease;
+  }
+  .nav-link:hover::after { width: 100%; }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid #22D3EE; outline-offset: 3px; border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { transition: none; opacity: 1; transform: none; }
+    .bar, .type-caret::after { animation: none; }
+  }
+</style>
+</head>
+
+<body class="bg-base text-ink font-sans antialiased selection:bg-indigo">
+
+<div id="scroll-progress"></div>
+
+<!-- ============ NAV ============ -->
+<header class="fixed top-0 inset-x-0 z-50">
+  <nav class="mx-auto max-w-6xl px-6 lg:px-8">
+    <div class="mt-4 flex items-center justify-between rounded-2xl glass px-5 py-3">
+      <a href="#top" class="font-semibold tracking-tight text-ink">
+        Uzair<span class="text-cyan">.</span><span class="text-mute font-normal text-sm ml-1 hidden sm:inline">Data Analyst</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8 text-sm text-mute">
+        <a href="#about" class="nav-link hover:text-ink transition-colors">About</a>
+        <a href="#skills" class="nav-link hover:text-ink transition-colors">Skills</a>
+        <a href="#projects" class="nav-link hover:text-ink transition-colors">Projects</a>
+        <a href="#journey" class="nav-link hover:text-ink transition-colors">Journey</a>
+        <a href="#contact" class="nav-link hover:text-ink transition-colors">Contact</a>
+      </div>
+      <a href="https://github.com/Uzair163" target="_blank" rel="noopener"
+         class="inline-flex items-center gap-2 rounded-lg bg-white/5 hover:bg-white/10 border border-line px-3 py-2 text-sm transition-colors">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.98 5.24.98 11.52c0 5.02 3.26 9.28 7.78 10.78.57.1.78-.25.78-.55v-1.94c-3.16.69-3.83-1.52-3.83-1.52-.52-1.31-1.26-1.66-1.26-1.66-1.03-.71.08-.69.08-.69 1.14.08 1.74 1.17 1.74 1.17 1.01 1.74 2.65 1.24 3.3.95.1-.73.4-1.24.72-1.53-2.52-.29-5.17-1.26-5.17-5.6 0-1.24.44-2.25 1.17-3.05-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.14 1.16a10.9 10.9 0 0 1 5.72 0c2.18-1.47 3.14-1.16 3.14-1.16.62 1.57.23 2.73.11 3.02.73.8 1.17 1.81 1.17 3.05 0 4.35-2.66 5.31-5.19 5.59.41.35.77 1.04.77 2.1v3.11c0 .3.21.66.79.55A11.03 11.03 0 0 0 23 11.52C23 5.24 18.27.5 12 .5Z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </nav>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="top" class="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden">
+  <div class="absolute inset-0 grid-backdrop"></div>
+  <div class="absolute -top-40 -left-40 w-[32rem] h-[32rem] glow-indigo rounded-full pointer-events-none"></div>
+  <div class="absolute top-1/3 -right-40 w-[28rem] h-[28rem] glow-cyan rounded-full pointer-events-none"></div>
+
+  <div class="relative mx-auto max-w-6xl px-6 lg:px-8 grid lg:grid-cols-12 gap-12 items-center w-full">
+
+    <div class="lg:col-span-7 reveal">
+      <div class="inline-flex items-center gap-2 text-xs text-mute font-mono mb-6 border border-line rounded-full px-3 py-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-cyan animate-pulse"></span>
+        Belfast, Northern Ireland
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.08]">
+        I turn messy data into
+        <span class="bg-gradient-to-r from-indigo-400 via-cyan to-violet bg-clip-text text-transparent">decisions people trust.</span>
+      </h1>
+
+      <p class="mt-6 text-lg text-mute max-w-xl leading-relaxed">
+        I'm <span class="text-ink font-medium">Uzair</span>, a data analyst and statistician who builds
+        <span id="typed-text" class="text-ink font-medium type-caret"></span>
+      </p>
+
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a href="#projects" class="rounded-lg bg-indigo hover:bg-indigo-dim px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo/25 transition-all hover:-translate-y-0.5 hover:shadow-indigo/40">
+          View projects
+        </a>
+        <a href="https://github.com/Uzair163" target="_blank" rel="noopener" class="rounded-lg border border-line hover:border-mute/50 px-6 py-3 text-sm font-semibold text-ink transition-all hover:-translate-y-0.5">
+          GitHub profile
+        </a>
+      </div>
+
+      <div class="mt-14 flex flex-wrap gap-x-10 gap-y-4 text-sm">
+        <div><span class="block text-2xl font-bold text-ink">6+ weeks</span><span class="text-mute">saved per reporting cycle via RAP</span></div>
+        <div><span class="block text-2xl font-bold text-ink">4</span><span class="text-mute">government departments served</span></div>
+        <div><span class="block text-2xl font-bold text-ink">2</span><span class="text-mute">professional certifications</span></div>
+      </div>
+    </div>
+
+    <!-- Live-data motif card -->
+    <div class="lg:col-span-5 reveal" style="transition-delay:0.1s">
+      <div class="glass rounded-2xl p-6 shadow-2xl shadow-black/40">
+        <div class="flex items-center justify-between mb-5">
+          <span class="text-xs font-mono text-mute">quarterly_revenue.ipynb</span>
+          <div class="flex gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-red-400/70"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-yellow-400/70"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-green-400/70"></span>
+          </div>
+        </div>
+
+        <div class="flex items-end gap-2.5 h-40 mb-4 px-1">
+          <div class="bar w-full rounded-t bg-gradient-to-t from-indigo/60 to-indigo" style="height:55%; animation-delay:0s"></div>
+          <div class="bar w-full rounded-t bg-gradient-to-t from-indigo/60 to-indigo" style="height:75%; animation-delay:0.2s"></div>
+          <div class="bar w-full rounded-t bg-gradient-to-t from-cyan/60 to-cyan" style="height:40%; animation-delay:0.4s"></div>
+          <div class="bar w-full rounded-t bg-gradient-to-t from-indigo/60 to-indigo" style="height:88%; animation-delay:0.6s"></div>
+          <div class="bar w-full rounded-t bg-gradient-to-t from-violet/60 to-violet" style="height:62%; animation-delay:0.8s"></div>
+          <div class="bar w-full rounded-t bg-gradient-to-t from-cyan/60 to-cyan" style="height:95%; animation-delay:1s"></div>
+          <div class="bar w-full rounded-t bg-gradient-to-t from-indigo/60 to-indigo" style="height:70%; animation-delay:1.2s"></div>
+        </div>
+
+        <div class="font-mono text-xs text-mute leading-relaxed border-t border-line pt-4 space-y-1">
+          <p><span class="text-violet">df</span> = pd.<span class="text-cyan">read_sql</span>(query, conn)</p>
+          <p><span class="text-violet">forecast</span> = model.<span class="text-cyan">predict</span>(next_6mo)</p>
+          <p class="text-mute/70"># churn risk flagged: 2 thresholds</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <a href="#about" aria-label="Scroll to About section" class="absolute bottom-8 left-1/2 -translate-x-1/2 text-mute hover:text-ink transition-colors">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16m0 0l-6-6m6 6l6-6"/></svg>
+  </a>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="relative py-28 border-t border-line">
+  <div class="mx-auto max-w-6xl px-6 lg:px-8 grid lg:grid-cols-12 gap-16">
+
+    <div class="lg:col-span-4 reveal">
+      <div class="w-1 h-10 bg-gradient-to-b from-indigo to-cyan rounded-full mb-6"></div>
+      <h2 class="text-3xl font-bold tracking-tight">About</h2>
+      <p class="mt-4 text-mute leading-relaxed">
+        Statistician at the Northern Ireland Civil Service Tech Lab, working across
+        Vital Statistics, Education, Infrastructure and Climate.
+      </p>
+    </div>
+
+    <div class="lg:col-span-8 reveal space-y-6 text-mute leading-relaxed" style="transition-delay:0.1s">
+      <p>
+        I care about the last mile of analytics: the moment a model, a dashboard or a pipeline actually
+        has to change what someone decides. That means as much attention on data quality, documentation
+        and stakeholder sign-off as on the analysis itself.
+      </p>
+      <p>
+        My background sits at the intersection of engineering and statistics — a BSc in Electrical
+        Engineering, an MSc in Business Analytics from Queen's University Belfast, and several years
+        turning that into reproducible pipelines, forecasting models and Power BI dashboards for public
+        sector and industry clients.
+      </p>
+      <p>
+        I'm a member of the Royal Statistical Society, hold AWS AI Practitioner and CompTIA Data+
+        certifications, and I'm currently working toward Microsoft's PL-300 and DP-900.
+      </p>
+
+      <div class="grid sm:grid-cols-3 gap-4 pt-4">
+        <div class="glass rounded-xl p-5">
+          <p class="text-sm font-semibold text-ink mb-1">Education</p>
+          <p class="text-sm text-mute">MSc Business Analytics, QUB</p>
+          <p class="text-sm text-mute">BSc Electrical Engineering</p>
+        </div>
+        <div class="glass rounded-xl p-5">
+          <p class="text-sm font-semibold text-ink mb-1">Certifications</p>
+          <p class="text-sm text-mute">AWS AI Practitioner</p>
+          <p class="text-sm text-mute">CompTIA Data+</p>
+        </div>
+        <div class="glass rounded-xl p-5">
+          <p class="text-sm font-semibold text-ink mb-1">Affiliation</p>
+          <p class="text-sm text-mute">Royal Statistical Society</p>
+          <p class="text-sm text-mute">member</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section id="skills" class="relative py-28 border-t border-line bg-panel/40">
+  <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+    <div class="reveal mb-16 max-w-xl">
+      <div class="w-1 h-10 bg-gradient-to-b from-indigo to-cyan rounded-full mb-6"></div>
+      <h2 class="text-3xl font-bold tracking-tight">Skills</h2>
+      <p class="mt-4 text-mute leading-relaxed">The stack I reach for daily, and the tools around it.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-10">
+
+      <!-- Core skills: meters -->
+      <div class="reveal">
+        <h3 class="text-sm font-semibold text-cyan mb-6">Core</h3>
+        <div class="space-y-5" id="core-meters">
+          <div class="skill-row" data-level="92">
+            <div class="flex justify-between text-sm mb-1.5"><span>SQL</span><span class="text-mute font-mono text-xs">92%</span></div>
+            <div class="h-1.5 rounded-full bg-line overflow-hidden"><div class="meter-fill h-full rounded-full bg-gradient-to-r from-indigo to-cyan"></div></div>
+          </div>
+          <div class="skill-row" data-level="88">
+            <div class="flex justify-between text-sm mb-1.5"><span>Python</span><span class="text-mute font-mono text-xs">88%</span></div>
+            <div class="h-1.5 rounded-full bg-line overflow-hidden"><div class="meter-fill h-full rounded-full bg-gradient-to-r from-indigo to-cyan"></div></div>
+          </div>
+          <div class="skill-row" data-level="90">
+            <div class="flex justify-between text-sm mb-1.5"><span>Power BI</span><span class="text-mute font-mono text-xs">90%</span></div>
+            <div class="h-1.5 rounded-full bg-line overflow-hidden"><div class="meter-fill h-full rounded-full bg-gradient-to-r from-indigo to-cyan"></div></div>
+          </div>
+          <div class="skill-row" data-level="85">
+            <div class="flex justify-between text-sm mb-1.5"><span>Excel</span><span class="text-mute font-mono text-xs">85%</span></div>
+            <div class="h-1.5 rounded-full bg-line overflow-hidden"><div class="meter-fill h-full rounded-full bg-gradient-to-r from-indigo to-cyan"></div></div>
+          </div>
+          <div class="skill-row" data-level="80">
+            <div class="flex justify-between text-sm mb-1.5"><span>R</span><span class="text-mute font-mono text-xs">80%</span></div>
+            <div class="h-1.5 rounded-full bg-line overflow-hidden"><div class="meter-fill h-full rounded-full bg-gradient-to-r from-indigo to-cyan"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tools & cloud: badge grid -->
+      <div class="reveal" style="transition-delay:0.1s">
+        <h3 class="text-sm font-semibold text-violet mb-6">Tools & Cloud</h3>
+        <div class="flex flex-wrap gap-2.5">
+          <span class="skill-badge">Azure</span>
+          <span class="skill-badge">Pandas</span>
+          <span class="skill-badge">NumPy</span>
+          <span class="skill-badge">Matplotlib</span>
+          <span class="skill-badge">Seaborn</span>
+          <span class="skill-badge">Data Cleaning</span>
+          <span class="skill-badge">Data Visualisation</span>
+          <span class="skill-badge">ETL Pipelines</span>
+          <span class="skill-badge">Data Warehousing</span>
+          <span class="skill-badge">Git & GitHub</span>
+          <span class="skill-badge">REST APIs</span>
+          <span class="skill-badge">Automation</span>
+          <span class="skill-badge">Streamlit</span>
+          <span class="skill-badge">DAX / Power Query</span>
+        </div>
+
+        <h3 class="text-sm font-semibold text-cyan mt-10 mb-4">In progress</h3>
+        <div class="flex flex-wrap gap-2.5">
+          <span class="skill-badge border-cyan/30 text-cyan/90">PL-300</span>
+          <span class="skill-badge border-cyan/30 text-cyan/90">DP-900</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects" class="relative py-28 border-t border-line">
+  <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+    <div class="reveal mb-16 max-w-xl">
+      <div class="w-1 h-10 bg-gradient-to-b from-indigo to-cyan rounded-full mb-6"></div>
+      <h2 class="text-3xl font-bold tracking-tight">Projects</h2>
+      <p class="mt-4 text-mute leading-relaxed">A selection of work from industry, government and my MSc.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <!-- Project 1 -->
+      <article class="reveal group rounded-2xl border border-line hover:border-indigo/40 p-7 transition-all duration-300 hover:-translate-y-1 bg-panel/60">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs text-mute">KTP Project</span>
+          <svg class="w-5 h-5 text-mute group-hover:text-cyan group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">W&G Baird Analytics Pipeline</h3>
+        <p class="text-sm text-mute leading-relaxed mb-5">
+          A time-boxed Knowledge Transfer Partnership project with W&G Baird, a Northern Ireland printing
+          company, run through Queen's University Belfast. Built a full end-to-end analytics pipeline in
+          R and Python, with a Power BI dashboard and a Streamlit companion app. Delivered customer
+          concentration analysis, churn identification at two risk thresholds and a six-month revenue
+          forecast, plus a board-ready presentation and recorded walkthrough.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="tech-pill">R</span><span class="tech-pill">Python</span><span class="tech-pill">Power BI</span><span class="tech-pill">Streamlit</span><span class="tech-pill">Forecasting</span>
+        </div>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="reveal group rounded-2xl border border-line hover:border-cyan/40 p-7 transition-all duration-300 hover:-translate-y-1 bg-panel/60" style="transition-delay:0.05s">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs text-mute">Internal Tooling</span>
+          <svg class="w-5 h-5 text-mute group-hover:text-cyan group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">Reproducible Analytical Pipeline (RAP)</h3>
+        <p class="text-sm text-mute leading-relaxed mb-5">
+          Ongoing improvements to a RAP skeleton built in R and Shiny, used across multiple government
+          departments. Added downloadable Plotly charts via a webshot2-based approach, and helped cut
+          multi-department reporting turnaround from several weeks down to roughly one week.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="tech-pill">R</span><span class="tech-pill">Shiny</span><span class="tech-pill">Plotly</span><span class="tech-pill">Automation</span><span class="tech-pill">Git</span>
+        </div>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="reveal group rounded-2xl border border-line hover:border-violet/40 p-7 transition-all duration-300 hover:-translate-y-1 bg-panel/60">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs text-mute">Government / Policy</span>
+          <svg class="w-5 h-5 text-mute group-hover:text-cyan group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">Climate & Emissions Reporting Dashboard</h3>
+        <p class="text-sm text-mute leading-relaxed mb-5">
+          Built a carbon and emissions reporting dashboard in Power BI to support decision-making, and
+          contributed directly to the formation of Northern Ireland's Climate Action Plan as part of the
+          Tech Lab's Climate portfolio.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="tech-pill">Power BI</span><span class="tech-pill">DAX</span><span class="tech-pill">Data Warehousing</span><span class="tech-pill">SQL</span>
+        </div>
+      </article>
+
+      <!-- Project 4 -->
+      <article class="reveal group rounded-2xl border border-line hover:border-indigo/40 p-7 transition-all duration-300 hover:-translate-y-1 bg-panel/60" style="transition-delay:0.05s">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs text-mute">MSc Dissertation</span>
+          <svg class="w-5 h-5 text-mute group-hover:text-cyan group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">LLM-Based Fraud Detection</h3>
+        <p class="text-sm text-mute leading-relaxed mb-5">
+          MSc Business Analytics research project exploring how large language models can be applied to
+          fraud detection, comparing LLM-driven approaches against conventional classification techniques
+          for flagging suspicious transactions.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="tech-pill">Python</span><span class="tech-pill">LLMs</span><span class="tech-pill">Classification</span><span class="tech-pill">Research</span>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="reveal mt-10 text-center">
+      <a href="https://github.com/Uzair163" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-sm font-medium text-cyan hover:text-cyan/80 transition-colors">
+        See more on GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ JOURNEY / TIMELINE ============ -->
+<section id="journey" class="relative py-28 border-t border-line bg-panel/40">
+  <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+    <div class="reveal mb-16 max-w-xl">
+      <div class="w-1 h-10 bg-gradient-to-b from-indigo to-cyan rounded-full mb-6"></div>
+      <h2 class="text-3xl font-bold tracking-tight">Experience</h2>
+      <p class="mt-4 text-mute leading-relaxed">From electrical engineering to public sector statistics.</p>
+    </div>
+
+    <div class="relative max-w-3xl">
+      <div class="absolute left-[7px] top-2 bottom-2 w-px bg-line"></div>
+
+      <div class="space-y-12">
+
+        <div class="reveal relative pl-10">
+          <span class="absolute left-0 top-1.5 w-4 h-4 rounded-full bg-cyan shadow-[0_0_0_4px_rgba(34,211,238,0.15)]"></span>
+          <p class="text-xs font-mono text-mute mb-1">Current</p>
+          <h3 class="text-lg font-semibold">Statistician — NI Civil Service Tech Lab</h3>
+          <p class="text-sm text-mute mt-1.5 leading-relaxed">
+            Working across Vital Statistics, Education, Infrastructure and Climate. Leading RAP tooling
+            improvements and Power BI dashboard delivery for cross-department reporting.
+          </p>
+        </div>
+
+        <div class="reveal relative pl-10" style="transition-delay:0.05s">
+          <span class="absolute left-0 top-1.5 w-4 h-4 rounded-full bg-indigo shadow-[0_0_0_4px_rgba(99,102,241,0.15)]"></span>
+          <h3 class="text-lg font-semibold">Data Integrity Specialist — BT</h3>
+          <p class="text-sm text-mute mt-1.5 leading-relaxed">Belfast. Focused on data quality and integrity across large-scale telecom datasets.</p>
+        </div>
+
+        <div class="reveal relative pl-10" style="transition-delay:0.1s">
+          <span class="absolute left-0 top-1.5 w-4 h-4 rounded-full bg-indigo shadow-[0_0_0_4px_rgba(99,102,241,0.15)]"></span>
+          <h3 class="text-lg font-semibold">Technical Data Analyst — JobLogic</h3>
+          <p class="text-sm text-mute mt-1.5 leading-relaxed">Built and maintained technical reporting and analytics for a field-service management platform.</p>
+        </div>
+
+        <div class="reveal relative pl-10" style="transition-delay:0.15s">
+          <span class="absolute left-0 top-1.5 w-4 h-4 rounded-full bg-violet shadow-[0_0_0_4px_rgba(168,85,247,0.15)]"></span>
+          <h3 class="text-lg font-semibold">Data Analyst — Technovier</h3>
+          <p class="text-sm text-mute mt-1.5 leading-relaxed">Lahore. Early-career analytics role that set the foundation for a data-focused career.</p>
+        </div>
+
+        <div class="reveal relative pl-10" style="transition-delay:0.2s">
+          <span class="absolute left-0 top-1.5 w-4 h-4 rounded-full bg-line"></span>
+          <h3 class="text-lg font-semibold">MSc Business Analytics — Queen's University Belfast</h3>
+          <p class="text-sm text-mute mt-1.5 leading-relaxed">Dissertation on LLM-based fraud detection. Built on an undergraduate foundation in Electrical Engineering.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="relative py-28 border-t border-line overflow-hidden">
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[36rem] h-[24rem] glow-violet rounded-full pointer-events-none"></div>
+
+  <div class="relative mx-auto max-w-3xl px-6 lg:px-8 text-center reveal">
+    <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Let's talk data.</h2>
+    <p class="mt-4 text-mute leading-relaxed max-w-xl mx-auto">
+      Open to data analyst and statistician roles, freelance dashboard work, or just a conversation
+      about reproducible analytics.
+    </p>
+
+    <div class="mt-10 grid sm:grid-cols-3 gap-4 text-left">
+      <a href="mailto:ukhan03@qub.ac.uk" class="glass rounded-xl p-5 hover:border-cyan/30 border border-transparent transition-colors">
+        <p class="text-xs font-mono text-mute mb-1">Email</p>
+        <p class="text-sm font-medium truncate">ukhan03@qub.ac.uk</p>
+      </a>
+      <a href="https://linkedin.com/in/uzair" target="_blank" rel="noopener" class="glass rounded-xl p-5 hover:border-indigo/30 border border-transparent transition-colors">
+        <p class="text-xs font-mono text-mute mb-1">LinkedIn</p>
+        <p class="text-sm font-medium truncate">linkedin.com/in/uzair</p>
+      </a>
+      <a href="https://github.com/Uzair163" target="_blank" rel="noopener" class="glass rounded-xl p-5 hover:border-violet/30 border border-transparent transition-colors">
+        <p class="text-xs font-mono text-mute mb-1">GitHub</p>
+        <p class="text-sm font-medium truncate">github.com/Uzair163</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="border-t border-line py-8">
+  <div class="mx-auto max-w-6xl px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-mute">
+    <p>© <span id="year"></span> Uzair. Built with Tailwind CSS.</p>
+    <p class="font-mono">Belfast, Northern Ireland</p>
+  </div>
+</footer>
+
+<style>
+  .skill-badge {
+    @apply text-xs font-medium px-3.5 py-1.5 rounded-full border border-line text-ink/80 bg-panel2/60 hover:border-indigo/40 hover:text-ink transition-colors;
+  }
+  .tech-pill {
+    @apply text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] border border-line text-mute;
+  }
+</style>
+
+<script>
+  // ---------- Scroll progress bar ----------
+  const progressBar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    progressBar.style.width = scrolled + '%';
+  });
+
+  // ---------- Reveal on scroll ----------
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // ---------- Skill meters fill on view ----------
+  const meterRows = document.querySelectorAll('.skill-row');
+  const meterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const fill = entry.target.querySelector('.meter-fill');
+        fill.style.width = entry.target.dataset.level + '%';
+        meterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  meterRows.forEach(el => meterObserver.observe(el));
+
+  // ---------- Typing effect ----------
+  const typedEl = document.getElementById('typed-text');
+  const phrases = [
+    'reproducible analytics pipelines.',
+    'forecasting models that hold up.',
+    'dashboards stakeholders actually use.',
+    'clean pipelines from raw data to insight.'
+  ];
+  let phraseIndex = 0, charIndex = 0, deleting = false;
+
+  function typeLoop() {
+    const current = phrases[phraseIndex];
+    if (!deleting) {
+      charIndex++;
+      typedEl.textContent = current.slice(0, charIndex);
+      if (charIndex === current.length) {
+        deleting = true;
+        setTimeout(typeLoop, 1800);
+        return;
+      }
+    } else {
+      charIndex--;
+      typedEl.textContent = current.slice(0, charIndex);
+      if (charIndex === 0) {
+        deleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+      }
+    }
+    setTimeout(typeLoop, deleting ? 30 : 55);
+  }
+  typeLoop();
+
+  // ---------- Footer year ----------
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
